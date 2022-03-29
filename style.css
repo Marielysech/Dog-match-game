@@ -21,6 +21,7 @@ label {
 input {
     width: 50%;
     height: 25px;
+    padding: 1rem;
     border-radius: 5px;
     border: none;
     margin: 0.5rem auto;
@@ -56,6 +57,16 @@ input {
     padding: 1rem;
 }
 
+@keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+  }
+
+input::placeholder {
+    color:red;
+    font-size: bold;
+    padding:0.2rem;
+}
 
 
 .contestantName,
@@ -68,20 +79,21 @@ input {
 }
 
 button {
-    width: 25%;
+    width: 20%;
     height: 30px;
     border-radius: 20px;
 
 }
 #addContestant {
     margin: 1rem auto;
-    border: 1px solid aqua;
+    border: 3px solid rgb(126, 38, 240);
 }
 
 #startGame {
     margin: 2rem auto;
-    border: 1px solid aqua;
+    border: 3px solid rgb(126, 38, 240);
     text-align: center;
+    
 }
 
 .participantList {
@@ -124,31 +136,41 @@ button {
 }
 .gridContainer {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    width: 50%;
-    height: 40%;
-    grid-gap: 2rem;
+    grid-template-columns: 2fr 2fr;
+    grid-template-rows: 4fr 0.5fr;
+    width: 80%;
+    grid-gap: 1rem;
     overflow: hidden;
-    margin: 2rem auto;
+    margin: 4rem auto;
+    align-items: center;
 }
 
 .imageContainer {
     display: block;
-    object-fit: fill;
 }
 
-.gridContainer img {
+.gridContainer img:not(#fightIcon) {
     max-width: 100%;
-    object-fit: cover;
     height: 100%;
-    border: 10px solid rgb(240, 224, 204);
+    object-fit: cover;
+    border: 10px solid black;
 }
 
-figcaption {
+
+.imageContainer p {
     background-color: black;
     color: white;
     font-weight: bold;
     font-size: 15px;
-    /* margin-top: -2.5rem; */
+    margin-top: -5px;
+    padding: 8px;
     text-align: center;
+}
+
+
+#fightIcon {
+    object-fit: cover;
+    max-width: 100%;
+    margin: 0 auto;
+    width: 35%;
 }
