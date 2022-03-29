@@ -17,23 +17,19 @@ class DogContestant {
 // Event listeners
 addNewDogButton.addEventListener('click', addParticipantToGame)
 addNewDogButton.addEventListener('click', assigningImagesToUser)
+addNewDogButton.addEventListener('click', removeAlert)
 startButton.addEventListener('click', launchGame)
 
 
 // functions to set user attributes
 function addParticipantToGame() {
+    // entry variable
     let dogName = document.getElementById('dogName')
     let dogPersonnality = document.getElementById('dogPersonnality')
     let dogNameValue = dogName.value
     let dogPersonnalityValue = dogPersonnality.value
 
-    //removing alert of empty input
-    let alertM = document.querySelector("#alertMessage")
-    if (typeof(alertM) != 'undefined' && alertM != null) {
-        alertM.remove();
-    }
-
-    // if array is empty -> span 2 with new class and first element and quand pas empty remove la class
+    // if array is empty -> span 2 with new class and first element and quand pas empty remove la class (le faire pour each array impair qui sont dernière et ensuite lenlever )
 
     if( dogNameValue !== '' && dogPersonnalityValue !== '' ) {
 
@@ -69,22 +65,42 @@ function addParticipantToGame() {
     }
 }
 
-function assigningImagesToUser () {    
-    fetch('https://dog.ceo/api/breeds/image/random') 
-        .then(function(response){
-            if (response.ok) {
-            return response.json()
-            }
-            return Promise.reject('something went wrong')
-        })
-        .then(function(data) {
-            contestantArray.forEach(element => element.img = data.message)
-        })
+function assigningImagesToUser () {  
+    let length = contestantArray.length;
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&client_id=X5jAziNMO_54vZyjmraVcwnZItFZ_QxspTpHWLNuBkc';
+    
+    for (let i=0; i<contestantArray.length; i++) {
+     
+        fetch(url) 
+            .then(function(response){
+                if (response.ok) {
+                return response.json()
+                }
+                return Promise.reject('something went wrong')
+            })
+            .then(function(data) {
+                contestantArray[i].img = data[i].urls.regular
+            })
 
-        .catch(function(error) {
-            console.log("error is", error)
-        })
+            .catch(function(error) {
+                console.log("error is", error)
+            })
+        
+        console.log("this is the i value" + i)
     }
+    
+}
+
+
+    // removing alert of empty input
+function removeAlert() {  
+      
+    let alertM = document.querySelector("#alertMessage")
+    if (typeof(alertM) != 'undefined' && alertM != null) {
+        alertM.remove();
+    }
+}
+
 
 // game function 
 
@@ -96,26 +112,37 @@ function launchGame () {
         document.querySelector('.gamePreparation').after(alert)
     }
 
-    // creating the image container
-    let imagesContainer = document.createElement('div')
-    let image1 = document.createElement('img')
-    image1.setAttribute('src', contestantArray[0].img)
-    let image2 = document.createElement('img')
-    image2.setAttribute('src', contestantArray[1].img)
+    // creating the image container and sub text
+    let gridContainer = document.createElement('div')
+    gridContainer.classList.add('gridContainer')
 
+    let image1container = document.createElement('figure')
+    image1container.classList.add('imageContainer')
+
+    let image1 = document.createElement('img')
+    image1.setAttribute('src', contestantArray[1].img)
+
+    let image2container = document.createElement('figure')
+    image2container.classList.add('imageContainer')
+
+    let image2 = document.createElement('img')
+    image2.setAttribute('src', contestantArray[0].img)
+
+    let textImage1= document.createElement('figcaption')
+    textImage1.innerHTML = contestantArray[0].name + " the " + contestantArray[0].personality
+
+    let textImage2= document.createElement('figcaption')
+    textImage2.innerHTML = contestantArray[1].name + " the " + contestantArray[1].personality
 
     // where to append
     let placeToAppend = document.querySelector('.participantList')
 
-    placeToAppend.after(imagesContainer)
-    imagesContainer.append(image1)
-    imagesContainer.append(image2)
+    placeToAppend.after(gridContainer)
+    gridContainer.append(image1container)
+    gridContainer.append(image2container)
+    image1container.append(image1)
+    image1container.append(textImage1)
+    image2container.append(image2)
+    image2container.append(textImage2)
 
 }
-
-
-
-// Fetching img from Unsplash 
-// let length = contestantArray.length;
-// let url = 'https://api.unsplash.com/photos/random?collections=4625880&count=' + length + 'client_id=f-T5nA4rJ9fWUTsmTHfqUGVm1RAwb9C7iFqCDc5z-rY';
-   
