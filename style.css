@@ -14,6 +14,19 @@ h1 {
     margin: 0.5rem 0 2rem 0;
 }
 
+label {
+    font-weight: bold;
+}
+
+input {
+    width: 50%;
+    height: 25px;
+    border-radius: 5px;
+    border: none;
+    margin: 0.5rem auto;
+
+}
+
 .introduction {
     text-align: center;
     padding: 2rem;
@@ -64,4 +77,30 @@ h1 {
     border-radius: 20px;
     border: 1px solid aqua;
     text-align: center;
+}
+
+.participantList {
+    border: 1px solid blue;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    padding: 1rem;
+    width: 80%;
+    margin: 1rem auto;
+    text-align: center;
+}
+
+.participantList h2{
+    text-align: center;
+    grid-column: span 2;
+    margin: 1rem;
+}
+
+.participantList p {
+    margin: 0.2rem;
+    border: 1px solid blueviolet;
+    padding: 0.2rem;
+}
+
+#appearingOnEvent {
+    visibility: hidden;
 }
