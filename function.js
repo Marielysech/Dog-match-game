@@ -1,10 +1,3 @@
-// Global variable
-let startButton = document.getElementById('startGame')
-let addNewDogButton = document.getElementById('addContestant')
-
-// contestant Array
-let contestantArray = []
-
 // Creating the class object to store contestant information 
 class DogContestant {
     constructor (name, personality) {
@@ -14,6 +7,14 @@ class DogContestant {
     }
 } 
 
+// Global variable
+let startButton = document.getElementById('startGame')
+let addNewDogButton = document.getElementById('addContestant')
+let imageGrid = document.querySelector(".gridContainer")
+
+// contestant Array
+let contestantArray = []
+
 // Event listeners
 addNewDogButton.addEventListener('click', addParticipantToGame)
 addNewDogButton.addEventListener('click', assigningImagesToUser)
@@ -21,7 +22,8 @@ addNewDogButton.addEventListener('click', removeAlert)
 startButton.addEventListener('click', launchGame)
 
 
-// functions to set user attributes
+// functions 
+
 function addParticipantToGame() {
     // entry variable
     let dogName = document.getElementById('dogName')
@@ -29,7 +31,7 @@ function addParticipantToGame() {
     let dogNameValue = dogName.value.toUpperCase()
     let dogPersonnalityValue = dogPersonnality.value.toUpperCase()
 
-    // if array is empty -> span 2 with new class and first element and quand pas empty remove la class (le faire pour each array impair qui sont dernière et ensuite lenlever )
+    //TODO if array is empty -> span 2 with new class and first element and quand pas empty remove la class (le faire pour each array impair qui sont dernière et ensuite lenlever )
 
     if( dogNameValue !== '' && dogPersonnalityValue !== '' ) {
         // user creation 
@@ -64,7 +66,7 @@ function addParticipantToGame() {
 
 function assigningImagesToUser () {  
     let length = contestantArray.length;
-    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=LNuQ_LmhYxZNEWuRN5Nd1CvCKY7BIMWuNLlDXtPmhP4';
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=3YYhCn6fW0ekoBfPfg6l1jXk2t-eBXKh0fYgpCADNuA';
     
     for (let i=0; i<contestantArray.length; i++) {
      
@@ -101,108 +103,6 @@ function removeAlert() {
 
 // game function 
 
-function launchGame () {
-    if (contestantArray == '') {
-        const alert = document.createElement('p')
-        alert.innerHTML = 'PLEASE ENTER CONTESTANT TO LAUNCH THE GAME'
-        alert.setAttribute('id','alertMessage')
-        document.querySelector('.gamePreparation').after(alert)
-    }
-
-    // creating grid container
-    // where to append
-    let placeToAppend = document.querySelector('.participantList')
-    let gridContainer = document.createElement('div')
-    gridContainer.classList.add('gridContainer')
-    // let fightIcon = document.createElement('img')
-    // fightIcon.setAttribute('id','fightIcon')
-    // fightIcon.setAttribute('src', 'ressources/img/ versus.png')
-    placeToAppend.after(gridContainer)
-    // gridContainer.append(fightIcon)
-
-    createEntry(0, gridContainer)
-    createEntry(1, gridContainer)
-
-    
-
-    //create event listener
-    let imageLeft = document.querySelector('body > div.gridContainer > div:nth-child(1) > img')
-    console.log('this is the left image' + imageLeft)
-    let imageRight = document.querySelector('body > div.gridContainer > div:nth-child(2) > img')
-    let imageGrid = document.querySelector(".gridContainer")
-    imageGrid.addEventListener('click', selectRoundWinner);
-   
-
-    function selectRoundWinner(event) {
-        let winner = event.target.src
-
-        if (contestantArray.length > 0) {
-            if (winner === imageLeft.src) {
-                contestantArray.splice(1,1)
-                gridContainer.remove()
-                winnerAnnouce()
-                launchGame()
-
-            } else if (winner === imageRight.src) {
-                gridContainer.remove()
-                contestantArray.shift('')
-                winnerAnnouce()
-                launchGame()
-              
-            }
-        // } else if (contestantArray.length === 1 ) {
-        //         contestantArray.shift('')
-        //         imageLeft.classList.add('winnerDog')
-        //         let winnerAnnounce = document.createElement('h2')
-        //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
-        //         imageLeft.before(winnerAnnounce)
-        //         launchGame()
-
-        // }  
-    }    
-    // console.log(contestantArray)
-    // imageGrid.addEventListener('click', endGame);
-
-}
-    function winnerAnnouce (){
-        if(contestantArray.length == 1) {
-            let winnerAnnounce = document.createElement('h2')
-            imageLeft.classList.add('winnerDog')
-            winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
-            imageGrid.append(winnerAnnounce)
-        }
-
-    }
-
-    // function endGame(event) {
-    //     let winner = event.target.src
-    //     if (winner === imageLeft.src) {
-    //         contestantArray.splice(1,1)
-    //         gridContainer.remove()
-    //         let winnerAnnounce = document.createElement('h2')
-    //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
-    //         imageGrid.append(winnerAnnounce)
-    //         createEntry(0, gridContainer)
-
-    //     } else if (winner === imageRight.src) {
-    //         gridContainer.remove()
-    //         contestantArray.shift('')
-    //         let winnerAnnounce = document.createElement('h2')
-    //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
-    //         imageGrid.append(winnerAnnounce)
-    //         createEntry(0, gridContainer)
-
-    //     }
-    // }
-}
-
-// shift to renmive first array element
-// click game
-
-// click event (on the div) => change the nextelementsibling for next entry in array 
-// remove the looser from the array 
-// this.user.counter();
-
 function createEntry(index, parent) {
     // create 
     let imageContainer = document.createElement('div')
@@ -219,3 +119,52 @@ function createEntry(index, parent) {
     imageContainer.append(image)
     imageContainer.append(textImage)
  }
+
+function launchGame () {
+    //alert no contestant
+    if (contestantArray == '') {
+        const alert = document.createElement('p')
+        alert.innerHTML = 'PLEASE ENTER CONTESTANT TO LAUNCH THE GAME'
+        alert.setAttribute('id','alertMessage')
+        document.querySelector('.gamePreparation').after(alert)
+    }
+    //creating container to display players
+    imageGrid = document.createElement('div')
+    imageGrid.classList.add('gridContainer')
+    document.querySelector('.participantList').after(imageGrid)
+
+    createEntry(0, imageGrid)
+    createEntry(1, imageGrid)
+    
+    imageGrid.addEventListener('click', selectRoundWinner);
+    // imageGrid.addEventListener('click', winnerAnnouce(gridContainer)); 
+}
+
+
+ function selectRoundWinner(event) {
+    let winner = event.target.src
+    let player1 = document.querySelector('body > div.gridContainer > div:nth-child(1) > img')
+    let player2 = document.querySelector('body > div.gridContainer > div:nth-child(2) > img')   
+
+    if (contestantArray.length > 0) {
+        if (winner === player1.src) {
+            contestantArray.splice(1,1)
+            imageGrid.remove()
+            launchGame()
+
+        } else if (winner === player2.src) {
+            contestantArray.shift('')
+            imageGrid.remove()
+            launchGame()
+        }
+    }    
+}
+
+
+ function winnerAnnouce () {
+        imageGrid.remove()
+        launchGame()
+        let winnerAnnounce = document.createElement('h2')
+        winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
+        imageGrid.append(winnerAnnounce)
+}
