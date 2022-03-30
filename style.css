@@ -149,7 +149,7 @@ button {
     display: block;
 }
 
-.gridContainer img:not(#fightIcon) {
+.gridContainer img {
     max-width: 100%;
     height: 100%;
     object-fit: cover;
@@ -160,6 +160,7 @@ button {
 .imageContainer p {
     background-color: black;
     color: white;
+    width: 100%;
     font-weight: bold;
     font-size: 15px;
     margin-top: -5px;
@@ -177,11 +178,29 @@ button {
 
 
 #winnerMessage {
-    padding: 5rem;
-    color: rgb(73, 82, 207);
+    padding: 2rem;
+    color: rgb(95, 29, 248);
+    background-color: aliceblue;
+    font-size: 40px;
+    box-shadow: inset 0 0 0 1000px rgba(244, 245, 237, 0.5);
     text-align: center;
-    background-image:url("./ressources/img/confetti3.jpg");
-    grid-column: span 2;
-    grid-row-start: 1;
+    background-image:url("./ressources/img/confetti.jpg");
 
+}
+
+.finalGrid {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: 0.5fr 3fr;
+    width: 60%;
+    grid-gap: 1rem;
+    margin: 4rem auto;
+    align-items: center;
+}
+
+.finalGrid img {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 10px solid black;
 }

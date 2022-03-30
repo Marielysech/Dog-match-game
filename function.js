@@ -174,12 +174,13 @@ function launchGame () {
      if(contestantArray.length === 1) {
         imageGrid.remove()
         imageGrid = document.createElement('div')
-        imageGrid.classList.add('gridContainer')
+        imageGrid.classList.add('finalGrid')
         document.querySelector('.participantList').after(imageGrid)
-        createEntry(0, imageGrid)
         let winnerMessage = document.createElement('h2')
         winnerMessage.setAttribute('id', 'winnerMessage')
         winnerMessage.innerHTML = "The winner is " + contestantArray[0].name + ' THE ' + contestantArray[0].name
         imageGrid.append(winnerMessage)
+        createEntry(0, imageGrid)
+
     }
  }
