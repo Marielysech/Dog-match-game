@@ -40,7 +40,7 @@ function addParticipantToGame() {
 
         // creating a list of participant
         let userDescription = document.createElement('p')
-        userDescription.innerHTML = dogNameValue + ' the ' + dogPersonnalityValue
+        userDescription.innerHTML = dogNameValue + ' THE ' + dogPersonnalityValue
         
         let participantListDiv = document.querySelector('.participantList')
         if (participantListDiv.hasAttribute('id') === true ) {
@@ -64,7 +64,7 @@ function addParticipantToGame() {
 
 function assigningImagesToUser () {  
     let length = contestantArray.length;
-    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&client_id=ys6tVpDbr_tZoTx9wvBWH6lGgR4035lBTUfeMq6GpD4';
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=LNuQ_LmhYxZNEWuRN5Nd1CvCKY7BIMWuNLlDXtPmhP4';
     
     for (let i=0; i<contestantArray.length; i++) {
      
@@ -129,31 +129,71 @@ function launchGame () {
     let imageLeft = document.querySelector('body > div.gridContainer > div:nth-child(1) > img')
     console.log('this is the left image' + imageLeft)
     let imageRight = document.querySelector('body > div.gridContainer > div:nth-child(2) > img')
-    let imageGrid = document.querySelector("body > div.gridContainer")
+    let imageGrid = document.querySelector(".gridContainer")
     imageGrid.addEventListener('click', selectRoundWinner);
+   
 
     function selectRoundWinner(event) {
-        while (contestantArray.length > 1) {
-            let winner = event.target.src
-            console.log(winner)
-            console.log(imageLeft)
+        let winner = event.target.src
 
+        if (contestantArray.length > 0) {
             if (winner === imageLeft.src) {
                 contestantArray.splice(1,1)
-                imageRight.remove()
-                imageLeft.remove()
-                createEntry(0, gridContainer)
-                createEntry(1, gridContainer)
+                gridContainer.remove()
+                winnerAnnouce()
+                launchGame()
 
             } else if (winner === imageRight.src) {
+                gridContainer.remove()
                 contestantArray.shift('')
-                imageRight.remove()
-                imageLeft.remove()
-                createEntry(0, gridContainer)
-                createEntry(1, gridContainer)
+                winnerAnnouce()
+                launchGame()
+              
             }
+        // } else if (contestantArray.length === 1 ) {
+        //         contestantArray.shift('')
+        //         imageLeft.classList.add('winnerDog')
+        //         let winnerAnnounce = document.createElement('h2')
+        //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
+        //         imageLeft.before(winnerAnnounce)
+        //         launchGame()
+
+        // }  
+    }    
+    // console.log(contestantArray)
+    // imageGrid.addEventListener('click', endGame);
+
+}
+    function winnerAnnouce (){
+        if(contestantArray.length == 1) {
+            let winnerAnnounce = document.createElement('h2')
+            imageLeft.classList.add('winnerDog')
+            winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
+            imageGrid.append(winnerAnnounce)
         }
-    }  
+
+    }
+
+    // function endGame(event) {
+    //     let winner = event.target.src
+    //     if (winner === imageLeft.src) {
+    //         contestantArray.splice(1,1)
+    //         gridContainer.remove()
+    //         let winnerAnnounce = document.createElement('h2')
+    //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
+    //         imageGrid.append(winnerAnnounce)
+    //         createEntry(0, gridContainer)
+
+    //     } else if (winner === imageRight.src) {
+    //         gridContainer.remove()
+    //         contestantArray.shift('')
+    //         let winnerAnnounce = document.createElement('h2')
+    //         winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
+    //         imageGrid.append(winnerAnnounce)
+    //         createEntry(0, gridContainer)
+
+    //     }
+    // }
 }
 
 // shift to renmive first array element
@@ -178,5 +218,4 @@ function createEntry(index, parent) {
     parent.append(imageContainer)
     imageContainer.append(image)
     imageContainer.append(textImage)
-    
  }

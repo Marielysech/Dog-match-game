@@ -24,7 +24,7 @@
 
         <div class="contestantPersonality">
             <label for="dogPersonnality">Dog personnality</label>
-            <input type="text" name="" id="dogPersonnality" list="personnalityDogList">
+            <input type="text" name="" id="dogPersonnality" list="personnalityDogList" onchange="resetIfInvalid(this);">
             <datalist id="personnalityDogList">
                 <option value="Clumsy">Clumsy</option>
                 <option value="Confident">Confident</option>

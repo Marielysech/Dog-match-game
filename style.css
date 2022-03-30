@@ -136,7 +136,7 @@ button {
 }
 .gridContainer {
     display: grid;
-    grid-template-columns: 2fr 2fr;
+    grid-template-columns: repeat(2, 1fr);
     grid-template-rows: 4fr 0.5fr;
     width: 80%;
     grid-gap: 1rem;
@@ -173,4 +173,8 @@ button {
     max-width: 100%;
     margin: 0 auto;
     width: 35%;
+}
+
+.winnerDog {
+    grid-column: span 2 ;
 }
