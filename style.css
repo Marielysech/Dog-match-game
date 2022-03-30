@@ -194,6 +194,7 @@ button {
     grid-template-rows: 0.5fr 3fr;
     width: 60%;
     grid-gap: 1rem;
+    overflow: hidden;
     margin: 4rem auto;
     align-items: center;
 }

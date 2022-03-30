@@ -66,7 +66,7 @@ function addParticipantToGame() {
 
 function assigningImagesToUser () {  
     let length = contestantArray.length;
-    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=5t2yb1hMgg8GvSB7IapuXUB7D5f2za7RF6BeYnftRIU';
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=o1sXGH1knKJl0nGR_8Ha1OsQH6r5WrpieG2Vuq_msRQ';
     
     for (let i=0; i<contestantArray.length; i++) {
      
