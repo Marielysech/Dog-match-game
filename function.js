@@ -66,7 +66,7 @@ function addParticipantToGame() {
 
 function assigningImagesToUser () {  
     let length = contestantArray.length;
-    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=3YYhCn6fW0ekoBfPfg6l1jXk2t-eBXKh0fYgpCADNuA';
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=tzj63olUpRWMcPCsM8T_ieD7DXMszdFp_PF3CWcZVoI';
     
     for (let i=0; i<contestantArray.length; i++) {
      
@@ -135,9 +135,9 @@ function launchGame () {
 
     createEntry(0, imageGrid)
     createEntry(1, imageGrid)
-    
+
     imageGrid.addEventListener('click', selectRoundWinner);
-    // imageGrid.addEventListener('click', winnerAnnouce(gridContainer)); 
+    
 }
 
 
@@ -146,7 +146,7 @@ function launchGame () {
     let player1 = document.querySelector('body > div.gridContainer > div:nth-child(1) > img')
     let player2 = document.querySelector('body > div.gridContainer > div:nth-child(2) > img')   
 
-    if (contestantArray.length > 0) {
+    if (contestantArray.length > 2) {
         if (winner === player1.src) {
             contestantArray.splice(1,1)
             imageGrid.remove()
@@ -157,14 +157,29 @@ function launchGame () {
             imageGrid.remove()
             launchGame()
         }
-    }    
-}
+    } else if (contestantArray.length > 1) {
+            if (winner === player1.src) {
+                contestantArray.splice(1,1)
+                winnerAnnouce()
+
+            } else if (winner === player2.src) {
+                contestantArray.shift('')
+                winnerAnnouce()
+        }
+    }
+ }
 
 
- function winnerAnnouce () {
+ function winnerAnnouce() {
+     if(contestantArray.length === 1) {
         imageGrid.remove()
-        launchGame()
-        let winnerAnnounce = document.createElement('h2')
-        winnerAnnounce.innerHTML = "The winner is" + contestantArray[0].name + ' THE ' + contestantArray[0].name
-        imageGrid.append(winnerAnnounce)
-}
+        imageGrid = document.createElement('div')
+        imageGrid.classList.add('gridContainer')
+        document.querySelector('.participantList').after(imageGrid)
+        createEntry(0, imageGrid)
+        let winnerMessage = document.createElement('h2')
+        winnerMessage.setAttribute('id', 'winnerMessage')
+        winnerMessage.innerHTML = "The winner is " + contestantArray[0].name + ' THE ' + contestantArray[0].name
+        imageGrid.append(winnerMessage)
+    }
+ }

@@ -175,6 +175,13 @@ button {
     width: 35%;
 }
 
-.winnerDog {
-    grid-column: span 2 ;
+
+#winnerMessage {
+    padding: 5rem;
+    color: rgb(73, 82, 207);
+    text-align: center;
+    background-image:url("./ressources/img/confetti3.jpg");
+    grid-column: span 2;
+    grid-row-start: 1;
+
 }
