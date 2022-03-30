@@ -19,7 +19,7 @@ let contestantArray = []
 addNewDogButton.addEventListener('click', addParticipantToGame)
 addNewDogButton.addEventListener('click', assigningImagesToUser)
 addNewDogButton.addEventListener('click', removeAlert)
-startButton.addEventListener('click', launchGame)
+startButton.addEventListener('click', initGame)
 
 
 // functions 
@@ -66,7 +66,7 @@ function addParticipantToGame() {
 
 function assigningImagesToUser () {  
     let length = contestantArray.length;
-    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=o1sXGH1knKJl0nGR_8Ha1OsQH6r5WrpieG2Vuq_msRQ';
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=5t2yb1hMgg8GvSB7IapuXUB7D5f2za7RF6BeYnftRIU';
     
     for (let i=0; i<contestantArray.length; i++) {
      
@@ -120,7 +120,7 @@ function createEntry(index, parent) {
     imageContainer.append(textImage)
  }
 
-function launchGame () {
+function initGame () {
     //alert no contestant
     if (contestantArray == '') {
         const alert = document.createElement('p')
@@ -128,6 +128,14 @@ function launchGame () {
         alert.setAttribute('id','alertMessage')
         document.querySelector('.gamePreparation').after(alert)
     }
+
+    startButton.removeEventListener('click', initGame)
+    launchGame();
+}
+
+
+
+function launchGame() {    
     //creating container to display players
     imageGrid = document.createElement('div')
     imageGrid.classList.add('gridContainer')
