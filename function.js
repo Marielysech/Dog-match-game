@@ -1,10 +1,3 @@
-// Global variable
-let startButton = document.getElementById('startGame')
-let addNewDogButton = document.getElementById('addContestant')
-
-// contestant Array
-let contestantArray = []
-
 // Creating the class object to store contestant information 
 class DogContestant {
     constructor (name, personality) {
@@ -12,66 +5,181 @@ class DogContestant {
         this.personality = personality;
         this.img = ""
     }
-}
+} 
+
+// Global variable
+let startButton = document.getElementById('startGame')
+let addNewDogButton = document.getElementById('addContestant')
+let imageGrid = document.querySelector(".gridContainer")
+
+// contestant Array
+let contestantArray = []
 
 // Event listeners
 addNewDogButton.addEventListener('click', addParticipantToGame)
 addNewDogButton.addEventListener('click', assigningImagesToUser)
+addNewDogButton.addEventListener('click', removeAlert)
+startButton.addEventListener('click', launchGame)
 
-// startButton.addEventListener('click', launchGame)
 
+// functions 
 
-// functions to set user attributes
 function addParticipantToGame() {
-    // user creation 
-    let dogName = document.getElementById('dogName').value
-    let dogPersonnality = document.getElementById('dogPersonnality').value
-    const user = new DogContestant(dogName, dogPersonnality)
-    console.log(contestantArray)
+    // entry variable
+    let dogName = document.getElementById('dogName')
+    let dogPersonnality = document.getElementById('dogPersonnality')
+    let dogNameValue = dogName.value.toUpperCase()
+    let dogPersonnalityValue = dogPersonnality.value.toUpperCase()
 
-    contestantArray.push(user);
+    //TODO if array is empty -> span 2 with new class and first element and quand pas empty remove la class (le faire pour each array impair qui sont dernière et ensuite lenlever )
 
-    // element creation
-    let userDescription = document.createElement('p')
+    if( dogNameValue !== '' && dogPersonnalityValue !== '' ) {
+        // user creation 
+        const user = new DogContestant(dogNameValue, dogPersonnalityValue)
+        console.log(contestantArray)
 
-    // remplissage element
-    userDescription.innerHTML = dogName + ' the ' + dogPersonnality
-    
-    // appending element
-    let participantListDiv = document.querySelector('.participantList')
-    if (participantListDiv.hasAttribute('id') === true ) {
-         participantListDiv.removeAttribute('id')
-     }
-    let participantEntry = document.querySelector("body > div.participantList > h2")
-    participantEntry.after(userDescription)
-    document.querySelector("#appearingOnEvent")
+        contestantArray.push(user);
+
+        // creating a list of participant
+        let userDescription = document.createElement('p')
+        userDescription.innerHTML = dogNameValue + ' THE ' + dogPersonnalityValue
+        
+        let participantListDiv = document.querySelector('.participantList')
+        if (participantListDiv.hasAttribute('id') === true ) {
+            participantListDiv.removeAttribute('id')
+        }
+        let participantEntry = document.querySelector("body > div.participantList > h2")
+        participantEntry.after(userDescription)
+        document.querySelector("#appearingOnEvent")
+
+    } else {
+        if (dogNameValue == '' && dogPersonnalityValue) {
+            dogName.setAttribute('placeholder', '! Please enter name')
+
+        } else if(dogPersonnalityValue  == '' && dogNameValue) {
+            dogPersonnality.setAttribute('placeholder', '! Choose personality')
+        }   
+        dogPersonnality.setAttribute('placeholder', '! Please enter name')
+        dogName.setAttribute('placeholder', '! Choose personality')
+    }
 }
 
-function assigningImagesToUser () {    
-    fetch('https://dog.ceo/api/breeds/image/random') 
-        .then(function(response){
-            if (response.ok) {
-            return response.json()
-            }
-            return Promise.reject('something went wrong')
-        })
-        .then(function(data) {
-            contestantArray.forEach(element => element.img = data.message)
-        })
+function assigningImagesToUser () {  
+    let length = contestantArray.length;
+    let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=tzj63olUpRWMcPCsM8T_ieD7DXMszdFp_PF3CWcZVoI';
+    
+    for (let i=0; i<contestantArray.length; i++) {
+     
+        fetch(url) 
+            .then(function(response){
+                if (response.ok) {
+                return response.json()
+                }
+                return Promise.reject('something went wrong')
+            })
+            .then(function(data) {
+                contestantArray[i].img = data[i].urls.regular
+            })
 
-        .catch(function(error) {
-            console.log("error is", error)
-        })
+            .catch(function(error) {
+                console.log("error is", error)
+            })
+        
+        console.log("this is the i value" + i)
     }
+    
+}
 
 
+    // removing alert of empty input
+function removeAlert() {  
+      
+    let alertM = document.querySelector("#alertMessage")
+    if (typeof(alertM) != 'undefined' && alertM != null) {
+        alertM.remove();
+    }
+}
 
-// Fetching img from Unsplash 
 
-// let length = contestantArray.length;
-// let url = 'https://api.unsplash.com/photos/random?collections=4625880&count=' + length + 'client_id=f-T5nA4rJ9fWUTsmTHfqUGVm1RAwb9C7iFqCDc5z-rY';
+// game function 
+
+function createEntry(index, parent) {
+    // create 
+    let imageContainer = document.createElement('div')
+    imageContainer.classList.add('imageContainer')
    
+    let image = document.createElement('img')
+    image.setAttribute('src', contestantArray[index].img)
+     
+    let textImage= document.createElement('p')
+    textImage.innerHTML = contestantArray[index].name + " THE " + contestantArray[index].personality
+
+    // append
+    parent.append(imageContainer)
+    imageContainer.append(image)
+    imageContainer.append(textImage)
+ }
+
+function launchGame () {
+    //alert no contestant
+    if (contestantArray == '') {
+        const alert = document.createElement('p')
+        alert.innerHTML = 'PLEASE ENTER CONTESTANT TO LAUNCH THE GAME'
+        alert.setAttribute('id','alertMessage')
+        document.querySelector('.gamePreparation').after(alert)
+    }
+    //creating container to display players
+    imageGrid = document.createElement('div')
+    imageGrid.classList.add('gridContainer')
+    document.querySelector('.participantList').after(imageGrid)
+
+    createEntry(0, imageGrid)
+    createEntry(1, imageGrid)
+
+    imageGrid.addEventListener('click', selectRoundWinner);
+    
+}
 
 
-let test = document.getElementById('startGame')
-test.addEventListener('click', assignPictureToContestant)
+ function selectRoundWinner(event) {
+    let winner = event.target.src
+    let player1 = document.querySelector('body > div.gridContainer > div:nth-child(1) > img')
+    let player2 = document.querySelector('body > div.gridContainer > div:nth-child(2) > img')   
+
+    if (contestantArray.length > 2) {
+        if (winner === player1.src) {
+            contestantArray.splice(1,1)
+            imageGrid.remove()
+            launchGame()
+
+        } else if (winner === player2.src) {
+            contestantArray.shift('')
+            imageGrid.remove()
+            launchGame()
+        }
+    } else if (contestantArray.length > 1) {
+            if (winner === player1.src) {
+                contestantArray.splice(1,1)
+                winnerAnnouce()
+
+            } else if (winner === player2.src) {
+                contestantArray.shift('')
+                winnerAnnouce()
+        }
+    }
+ }
+
+
+ function winnerAnnouce() {
+     if(contestantArray.length === 1) {
+        imageGrid.remove()
+        imageGrid = document.createElement('div')
+        imageGrid.classList.add('gridContainer')
+        document.querySelector('.participantList').after(imageGrid)
+        createEntry(0, imageGrid)
+        let winnerMessage = document.createElement('h2')
+        winnerMessage.setAttribute('id', 'winnerMessage')
+        winnerMessage.innerHTML = "The winner is " + contestantArray[0].name + ' THE ' + contestantArray[0].name
+        imageGrid.append(winnerMessage)
+    }
+ }

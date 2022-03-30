@@ -21,6 +21,7 @@ label {
 input {
     width: 50%;
     height: 25px;
+    padding: 1rem;
     border-radius: 5px;
     border: none;
     margin: 0.5rem auto;
@@ -46,12 +47,26 @@ input {
 
 .userInputs {
     text-align: center;
+    margin: 0 auto;
+    border-radius: 10px;
+    background-color: rgb(240, 224, 204);
+    width: 70%;
     display: flex;
     flex-direction: column;
     border: 1px solid black;
     padding: 1rem;
 }
 
+@keyframes mymove {
+    from {left: 0px;}
+    to {left: 200px;}
+  }
+
+input::placeholder {
+    color:red;
+    font-size: bold;
+    padding:0.2rem;
+}
 
 
 .contestantName,
@@ -63,20 +78,22 @@ input {
 
 }
 
-
-#addContestant {
-    width: 40%;
-    margin: 1rem auto;
+button {
+    width: 20%;
+    height: 30px;
     border-radius: 20px;
-    border: 1px solid aqua;
+
+}
+#addContestant {
+    margin: 1rem auto;
+    border: 3px solid rgb(126, 38, 240);
 }
 
 #startGame {
-    width: 40%;
     margin: 2rem auto;
-    border-radius: 20px;
-    border: 1px solid aqua;
+    border: 3px solid rgb(126, 38, 240);
     text-align: center;
+    
 }
 
 .participantList {
@@ -87,6 +104,7 @@ input {
     width: 80%;
     margin: 1rem auto;
     text-align: center;
+    background-color: aliceblue;
 }
 
 .participantList h2{
@@ -98,9 +116,72 @@ input {
 .participantList p {
     margin: 0.2rem;
     border: 1px solid blueviolet;
+    border-radius: 30px;
     padding: 0.2rem;
 }
 
 #appearingOnEvent {
     visibility: hidden;
+}
+
+#alertMessage {
+    background-color: aliceblue;
+    width: fit-content;
+    margin: 0 auto;
+    border-radius: 5px;
+    border: 2px solid red;
+    color: red;
+    font-size: bold;
+    padding: 1rem;
+}
+.gridContainer {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: 4fr 0.5fr;
+    width: 80%;
+    grid-gap: 1rem;
+    overflow: hidden;
+    margin: 4rem auto;
+    align-items: center;
+}
+
+.imageContainer {
+    display: block;
+}
+
+.gridContainer img:not(#fightIcon) {
+    max-width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border: 10px solid black;
+}
+
+
+.imageContainer p {
+    background-color: black;
+    color: white;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: -5px;
+    padding: 8px;
+    text-align: center;
+}
+
+
+#fightIcon {
+    object-fit: cover;
+    max-width: 100%;
+    margin: 0 auto;
+    width: 35%;
+}
+
+
+#winnerMessage {
+    padding: 5rem;
+    color: rgb(73, 82, 207);
+    text-align: center;
+    background-image:url("./ressources/img/confetti3.jpg");
+    grid-column: span 2;
+    grid-row-start: 1;
+
 }
