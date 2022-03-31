@@ -54,7 +54,6 @@ input {
     margin: 0 auto;
     width: 60%;
     border: 1px solid ;
-    cursor: url('./ressources/img/pointerLeft.png'), pointer;
 }
 
 .gamePreparation {
@@ -115,8 +114,9 @@ button {
 }
 
 .participantList {
-    border: 1px solid blue;
+    border: 1px solid rgb(33, 0, 223);
     display: grid;
+    border-radius: 10px;
     grid-template-columns: repeat(2, 1fr);
     padding: 1rem;
     width: 80%;
@@ -172,7 +172,6 @@ button {
     height: 100%;
     object-fit: cover;
     border: 10px solid rgb(40, 6, 233);
-    cursor: url("./ressources/img/pointerLeft.png"), auto
 }
 
 
@@ -197,14 +196,14 @@ button {
 
 
 #winnerMessage {
-    padding: 2rem;
+    padding: 2rem;  
     color: rgb(95, 29, 248);
-    background-color: aliceblue;
     font-size: 40px;
     font-family: 'IBM Plex Serif', serif;
-    box-shadow: inset 0 0 0 1000px rgba(244, 245, 237, 0.5);
+    /* box-shadow: inset 0 0 0 1000px rgba(253, 253, 248, 0.1); */
     text-align: center;
-    background-image:url("./ressources/img/confetti.jpg");
+    background-image:url("./ressources/img/perro-perdiguero-de-oro.png");
+    background-repeat: round;
 
 }
 

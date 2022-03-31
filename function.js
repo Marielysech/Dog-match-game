@@ -52,6 +52,9 @@ function addParticipantToGame() {
         participantEntry.after(userDescription)
         document.querySelector("#appearingOnEvent")
 
+        dogPersonnality.value = '';
+        dogName.value = '';
+
     } else {
         if (dogNameValue == '' && dogPersonnalityValue) {
             dogName.setAttribute('placeholder', '! Please enter name')
@@ -68,7 +71,7 @@ function assigningImagesToUser () {
     let length = contestantArray.length;
     let url = 'https://api.unsplash.com/photos/random?collections=1254279&count=' + length + '&orientation=landscape&client_id=bc7JCj5_sQ5SYAVW6aiBKlTu4qAIayaVow1wZhwDbT4';
     
-    for (let i=0; i<contestantArray.length; i++) {
+    
      
         fetch(url) 
             .then(function(response){
@@ -78,7 +81,9 @@ function assigningImagesToUser () {
                 return Promise.reject('something went wrong')
             })
             .then(function(data) {
+                for (let i=0; i<contestantArray.length; i++) {
                 contestantArray[i].img = data[i].urls.regular
+            }
             })
 
             .catch(function(error) {
@@ -86,7 +91,6 @@ function assigningImagesToUser () {
             })
         
         console.log("this is the i value" + i)
-    }
     
 }
 
@@ -186,7 +190,7 @@ function launchGame() {
         document.querySelector('.participantList').after(imageGrid)
         let winnerMessage = document.createElement('h2')
         winnerMessage.setAttribute('id', 'winnerMessage')
-        winnerMessage.innerHTML = "The winner is " + contestantArray[0].name + ' THE ' + contestantArray[0].name
+        winnerMessage.innerHTML = contestantArray[0].name + ' the ' + contestantArray[0].personality + ' shoud be your next dog!'
         imageGrid.append(winnerMessage)
         createEntry(0, imageGrid)
 
